@@ -1,17 +1,17 @@
 #include <fstream>
 #include <iostream>
-#include <string>
 #include <vector>
 
+#include "Word.hpp"
 #include "WordKnowledge.hpp"
 
 int main()
 {
     // Read the words from file.
-    std::vector<std::string> words;
+    std::vector<Word> words;
     words.reserve(15000);
     std::ifstream wordfile("words");
-    std::string w;
+    Word w;
     while (wordfile >> w) {
         words.push_back(w);
     }
@@ -65,7 +65,7 @@ int main()
     // std::cout << '\n';
 
     // Collect and sort words and scores.
-    std::vector<std::pair<std::string, double>> word_and_score(num);
+    std::vector<std::pair<Word, double>> word_and_score(num);
     for (size_t ii = 0; ii < num; ++ii) {
         word_and_score[ii] = { words[ii], matching_fraction_avg[ii] };
     }

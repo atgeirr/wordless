@@ -1,8 +1,10 @@
+#include <cassert>
+
 #include "WordKnowledge.hpp"
 
 int main()
 {
-    std::vector<std::string> words = {
+    std::vector<Word> words = {
         "abcde",
         "edcba",
         "aaaaa",
@@ -10,16 +12,16 @@ int main()
         "bbbaa",
         "fffff"
     };
-    for (const std::string& answer : words) {
-        for (const std::string& guess : words) {
+    for (const Word& answer : words) {
+        for (const Word& guess : words) {
             WordKnowledge wk(answer, guess);
             std::cout << answer << " | " << guess << " | " << wk << std::endl;
         }
     }
 
     {
-        const std::string answer = "aabba";
-        const std::string guess = "bbbaa";
+        const Word answer = "aabba";
+        const Word guess = "bbbaa";
         WordKnowledge wk1(answer, guess);
         WordKnowledge wk2(guess, std::array<char, 5>{'o', 'n', 'p', 'o', 'p' });
         std::cout << answer << " | " << guess << " | " << wk1 << " | " << wk2 << std::endl;

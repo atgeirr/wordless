@@ -1,6 +1,10 @@
+#pragma once
+
 #include <cctype>
 #include <iostream>
 #include <string>
+
+#include "Word.hpp"
 
 namespace AnsiTerminalColors {
     const std::string none = "\033[0m";
@@ -23,7 +27,7 @@ namespace AnsiTerminalColors {
 class WordKnowledge
 {
 public:
-    WordKnowledge(const std::string& answer, const std::string& guess)
+    WordKnowledge(const Word& answer, const Word& guess)
     {
         // Find exact matches.
         for (int pos = 0; pos < 5; ++pos) {
@@ -58,7 +62,7 @@ public:
         }
     }
 
-    WordKnowledge(const std::string& guess, std::array<char,5> scoring)
+    WordKnowledge(const Word& guess, std::array<char,5> scoring)
     {
         for (int pos = 0; pos < 5; ++pos) {
             switch (scoring[pos]) {
@@ -75,7 +79,7 @@ public:
     }
 
 
-    bool isMatching(const std::string& candidate) const
+    bool isMatching(const Word& candidate) const
     {
         // Keep track of letters used up in matching.
         bool matched_letters[5] = { false };
