@@ -141,6 +141,21 @@ public:
         return true;
     }
 
+    // A number from 0..242 (3^5 - 1) compactly representing the match.
+    int matchCode()
+    {
+        auto digit = [this](int pos) { return pos_match[pos] != '0' ? 2
+                                       : off_match[pos] != '0' ? 1
+                                       : 0; };
+        int retval = 0;
+        int digitval = 1;
+        for (int pos = 0; pos < 5; ++pos) {
+            retval += digitval * digit(pos);
+            digitval *= 3;
+        }
+        return retval;
+    }
+
     bool operator==(const WordKnowledge& wk)
     {
         for (int pos = 0; pos < 5; ++pos) {

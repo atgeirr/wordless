@@ -32,27 +32,37 @@ int main()
 #else
     const size_t num = words.size()/15;
     std::vector<double> matching_fraction_avg(num, 0.0);
+    constexpr int num_matchcodes = 3*3*3*3*3;
     // double progress_marked = 0.0;
     // const double progress_step = 0.01;
 
     // Calculate matching fraction averages.
 #pragma omp parallel for
     for (size_t ii = 0; ii < num; ++ii) {
+        std::vector<int> matches_by_matchcode(num_matchcodes, -1);
         // Word ii is the guess.
         double matching_fraction_sum = 0.0;
         for (size_t jj = 0; jj < num; ++jj) {
             // For each word jj, assume it is the answer.
             // Score the guess, giving a WordKnowledge.
             WordKnowledge wk(words[jj], words[ii]);
+            const int matchcode = wk.matchCode();
+            size_t num_matches = 0;
+            if (matches_by_matchcode[matchcode] > -1) {
+                // Already calculated matches for this matchcode.
+                num_matches = matches_by_matchcode[matchcode];
+            } else {
+                // Must count matches.
+                for (size_t kk = 0; kk < num; ++kk) {
+                    if (wk.isMatching(words[kk])) {
+                        ++num_matches;
+                    }
+                }
+                matches_by_matchcode[matchcode] = num_matches;
+            }
             // The number of possible words matching this WordKnowledge,
             // divided by the total number of words, is the matching
             // fraction.
-            size_t num_matches = 0;
-            for (size_t kk = 0; kk < num; ++kk) {
-                if (wk.isMatching(words[kk])) {
-                    ++num_matches;
-                }
-            }
             const double matching_fraction = double(num_matches)/double(num);
             matching_fraction_sum += matching_fraction;
         }

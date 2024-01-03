@@ -15,7 +15,7 @@ int main()
     for (const Word& answer : words) {
         for (const Word& guess : words) {
             WordKnowledge wk(answer, guess);
-            std::cout << answer << " | " << guess << " | " << wk << std::endl;
+            std::cout << answer << " | " << guess << " | " << wk << " | code: "<< wk.matchCode() << std::endl;
         }
     }
 
