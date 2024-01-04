@@ -1,3 +1,6 @@
+// Copyright 2023 Atgeirr F Rasmussen
+// License: GPLv3+
+
 #pragma once
 
 #include <iostream>
