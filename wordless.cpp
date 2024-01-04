@@ -30,7 +30,7 @@ int main()
         }
     }
 #else
-    const size_t num = words.size()/15;
+    const size_t num = words.size();
     std::vector<double> matching_fraction_avg(num, 0.0);
     constexpr int num_matchcodes = 3*3*3*3*3;
     // double progress_marked = 0.0;
